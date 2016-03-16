@@ -31,7 +31,9 @@
                  [org.clojure/core.async "0.2.374"]
                  [cljs-ajax "0.5.4"]
                  [metosin/compojure-api "1.0.1"]
-                 [luminus-log4j "0.1.3"]]
+                 [luminus-log4j "0.1.3"]
+                 [clj-http "2.0.0"]
+                 ]
 
   :min-lein-version "2.0.0"
 
@@ -54,11 +56,11 @@
       :output-dir "target/cljsbuild/public/js/out"
       :externs ["react/externs/react.js"]
       :pretty-print true}}}}
-  
+
   :target-path "target/%s/"
   :profiles
   {:uberjar {:omit-source true
-             
+
               :prep-tasks ["compile" ["cljsbuild" "once"]]
               :cljsbuild
               {:builds
@@ -68,8 +70,8 @@
                  {:optimizations :advanced
                   :pretty-print false
                   :closure-warnings
-                  {:externs-validation :off :non-standard-jsdoc :off}}}}} 
-             
+                  {:externs-validation :off :non-standard-jsdoc :off}}}}}
+
              :aot :all
              :uberjar-name "swagger-service.jar"
              :source-paths ["env/prod/clj"]
@@ -100,8 +102,8 @@
                       {:output-to "target/test.js"
                        :main "swagger-service.doo-runner"
                        :optimizations :whitespace
-                       :pretty-print true}}}} 
-                  
+                       :pretty-print true}}}}
+
                   :figwheel
                   {:http-server-root "public"
                    :nrepl-port 7002
