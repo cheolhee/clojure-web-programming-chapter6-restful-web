@@ -2,6 +2,7 @@
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             ; [compojure.api.swagger :refer [swagger-docs]] ; 추가
+            [clj-http.client :as client]
             [schema.core :as s]))
 
 (s/defschema Thingie {:id Long
@@ -9,6 +10,14 @@
                       :tag (s/enum :kikka :kukka)
                       :chief [{:name String
                                :type #{{:id String}}}]})
+
+
+(defn get-links [link-count]
+  (client/get
+    (str
+      "http://thecatapi.com/api/images/get?format=xml&results_per_page="
+      link-count)))
+
 
 (defapi service-routes
  ; (ring.swagger.ui/swagger-ui
