@@ -1,6 +1,7 @@
 (ns swagger-service.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
+            [compojure.api.swagger :refer [swagger-docs]] ; 추가
             [schema.core :as s]))
 
 (s/defschema Thingie {:id Long
@@ -10,11 +11,15 @@
                                :type #{{:id String}}}]})
 
 (defapi service-routes
-  {:swagger {:ui "/swagger-ui"
-             :spec "/swagger.json"
-             :data {:info {:version "1.0.0"
-                           :title "Sample API"
-                           :description "Sample Services"}}}}
+ (ring.swagger.ui/swagger-ui
+   "/swagger-ui")
+ (swagger-docs
+    {:info {:title "Sample api"}})
+  ; {:swagger {:ui "/swagger-ui"
+  ;            :spec "/swagger.json"
+  ;            :data {:info {:version "1.0.0"
+  ;                          :title "Sample API"
+  ;                          :description "Sample Services"}}}}
   (context "/api" []
     :tags ["thingie"]
 
