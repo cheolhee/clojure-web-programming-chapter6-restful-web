@@ -3,6 +3,8 @@
             [compojure.api.sweet :refer :all]
             ; [compojure.api.swagger :refer [swagger-docs]] ; 추가
             [clj-http.client :as client]
+            [clojure.java.io :as io]
+            [clojure.xml :as xml]
             [schema.core :as s]))
 
 (s/defschema Thingie {:id Long
@@ -12,12 +14,21 @@
                                :type #{{:id String}}}]})
 
 
-(defn get-links [link-count]
-  (client/get
-    (str
-      "http://thecatapi.com/api/images/get?format=xml&results_per_page="
-      link-count)))
+; (defn get-links [link-count]
+;   (client/get
+;     (str
+;       "http://thecatapi.com/api/images/get?format=xml&results_per_page="
+;       link-count)))
 
+(defn parse-xml [xml]
+ (-> xml .getBytes io/input-stream xml/parse))
+
+(defn get-links [link-count]
+(-> "http://thecatapi.com/api/images/get?format=xml&results_per_page="
+      (str link-count)
+      client/get
+      :body
+      parse-xml))
 
 (defapi service-routes
  ; (ring.swagger.ui/swagger-ui
