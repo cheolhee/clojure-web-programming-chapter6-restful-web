@@ -43,7 +43,7 @@
                            :description "Sample Services"}}}}
   (context "/api" []
     :tags ["the Cat API"]
-    (GET "/catlinks" []
+    (GET "/cat-links" []
     :query-params [link-count :- Long]
     ;  :query-params [link-count :- s/Num] ; 에러 "(not (instance? java.lang.Number \"2\"))"
     ;  :coercion #(-> % :params :link-count Integer/parseInt) ; 에러..
